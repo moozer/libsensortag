@@ -7,7 +7,7 @@ The PC must support Bluetooth 4.0 in dual mode. The school has Bluetooth 4.0 don
 Download and install Linux
 --------------------------
 
-The Debian Linux distribution can be downloaded and installed from the Debian homepage. [Debian homepage](https://www.debian.org)
+The Debian Linux distribution can be downloaded and installed from the [Debian homepage](https://www.debian.org).
 
 For easy installation, download the 32/64 bit PC Network Installer and create either a bootable CD/DVD or a bootable USB pendrive. The windows tool UNetBootin is an easy tool to use, to make bootable USB drives from ISO files. [UNetBootin Homepage](http://unetbootin.sourceforge.net)
 
@@ -46,7 +46,7 @@ or
 10. 10.	Install the BlueZ software by writing the following (root):
   * `make install`
 
-11. the `gatttool` has to be copied manually into the Linux applications: (Root)
+11. The `gatttool` has to be copied manually into the Linux applications: (Root)
   * `cp attrib/gatttool /usr/local/bin/`
 
 12. Rename (or remove) the default Debian `gatttool` by writing the following command: (root)
@@ -59,8 +59,10 @@ Communicating with the SensorTag
 The SensorTag operates as basically as a GATT server, to which a GATT client can write commands and read data. The Linux tool `gatttool` can be used as a tool for read and write operations.
 
 1. First find the Bluetooth device handle in the Linux system:
-  * `$ hcitool dev
+  * ```
+    $ hcitool dev
 
-     Devices:
+    Devices:
 	hci0: 00:02:72:CC:E3:82
-	hci1: 00:10:C6:29:FD:4B`
+	hci1: 00:10:C6:29:FD:4B
+    ```
