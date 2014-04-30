@@ -58,7 +58,7 @@ Communicating with the SensorTag
 --------------------------------
 The SensorTag operates as basically as a GATT server, to which a GATT client can write commands and read data. The Linux tool `gatttool` can be used as a tool for read and write operations.
 
-1. First find the Bluetooth device handle in the Linux system:
+* First find the Bluetooth device handle in the Linux system:
 ```
    $ hcitool dev
 
@@ -68,7 +68,7 @@ The SensorTag operates as basically as a GATT server, to which a GATT client can
 ```
 This computer contains two Bluetooth cards. In this case it is the hci0 handle that is the Bluetooth Low energy card.
 
-2. Press the button on the side of the SensorTag, and enter the command below for scanning: (root).
+* Press the button on the side of the SensorTag, and enter the command below for scanning: (root).
 ```
    $ hcitool -i hci0 lescan
 
@@ -77,7 +77,7 @@ This computer contains two Bluetooth cards. In this case it is the hci0 handle t
    34:B1:F7:D5:05:FC SensorTag
 ```
 
-3. The address of the SensorTag is 34:B1:F7:D5:05:FC. Luckily there is only one protocol at the top of Bluetooth Low Energy, called the GATT protocol. The Linux tool `gatttool` implements the GATT protocol, and can be used for communicating with the SensorTag. The `gatttool` has to be executed with root privilege, and in the case below, it is used in interactive mode.
+* The address of the SensorTag is 34:B1:F7:D5:05:FC. Luckily there is only one protocol at the top of Bluetooth Low Energy, called the GATT protocol. The Linux tool `gatttool` implements the GATT protocol, and can be used for communicating with the SensorTag. The `gatttool` has to be executed with root privilege, and in the case below, it is used in interactive mode.
 ```
    $ gatttool -i hci0 -b 34:B1:F7:D5:05:FC --interactive
    [34:B1:F7:D5:05:FC][LE]>
@@ -109,18 +109,29 @@ The 0x25 is a "handle" - or address in the SensorTag, the `gatttool` can read. B
 
 The output from the temperature / humidity sensor is in a raw format, which has to be converted into Celsius and humidity by a mathematical formal (which can be found in the datasheet for the temperature sensor). 
 
-4. Disconnecting the device:
+* Disconnecting the device:
 ```
    [34:B1:F7:D5:05:FC][LE]> disconnect
 ```
 
-5. Exit `gatttool`
+* Exit `gatttool`
 ```
    [34:B1:F7:D5:05:FC][LE]> exit
 ```
 
 Various SensorTag Links
 -----------------------
-[The official BlueZ homepage](http://www.bluez.org "BlueZ Homepage")
+The official BlueZ homepage: [link](http://www.bluez.org "BlueZ Homepage")
 
-[The official SensorTag webpage from Texas instruments](http://www.ti.com/ww/en/wireless_connectivity/sensortag/index.shtml?INTC=SensorTag&HQS=sensortag "TI SensorTag")
+The official SensorTag webpage from Texas instruments: [link](http://www.ti.com/ww/en/wireless_connectivity/sensortag/index.shtml?INTC=SensorTag&HQS=sensortag "TI SensorTag")
+
+Michael Saunbys blog about Raspberry Pi, Python and SensorTag: [link](http://mike.saunby.net/2013/04/raspberry-pi-and-ti-cc2541-sensortag.html "Blog about Raspberry pi, python and SensorTag")
+
+Joost Yervante Damad blog about SensorTag experiments [link](http://joost.damad.be/2013/08/experiments-with-bluetooth-low-energy.html "Blog about SensorTag experiments")
+
+Page about unboxing and how to get started with the SensorTag [link](http://www.cnx-software.com/2013/07/21/texas-instruments-sensortag-unboxing-getting-started-with-bluetooth-low-energy-in-linux-with-a-raspberry-pi/)
+
+Article about the SensorTag hardware [link](http://makezine.com/2013/04/18/teardown-of-the-ti-sensortag/)
+
+Pretty cool webpage about programming and controlling the different sensors in the SensorTag. The source coude examples are in techBASIS, but the code example should be understandable [link](http://www.byteworks.us/Byte_Works/SensorTag.html)
+
