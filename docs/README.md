@@ -49,7 +49,7 @@ or
 11. the `gatttool` has to be copied manually into the Linux applications: (Root)
   * `cp attrib/gatttool /usr/local/bin/`
 
-12: Rename (or remove) the default Debian `gatttool` by writing the following command: (root)
+12. Rename (or remove) the default Debian `gatttool` by writing the following command: (root)
   * `mv /usr/bin/gatttool /usr/bin/gatttool-old`
 
 In one of the comments in the guideline from the blog, it is noticed that the kernel has to be equal or higher to version 3.5. But the version of the default kernel in Debian version 7.4.0 is 3.2, which seems to work just fine! So don’t begin to update the Linux kernel, unless you find it funny.
@@ -58,4 +58,9 @@ Communicating with the SensorTag
 --------------------------------
 The SensorTag operates as basically as a GATT server, to which a GATT client can write commands and read data. The Linux tool `gatttool` can be used as a tool for read and write operations.
 
+1. First find the Bluetooth device handle in the Linux system:
+  * `$ hcitool dev
 
+     Devices:
+	hci0: 00:02:72:CC:E3:82
+	hci1: 00:10:C6:29:FD:4B`
