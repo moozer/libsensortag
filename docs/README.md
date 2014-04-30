@@ -59,10 +59,68 @@ Communicating with the SensorTag
 The SensorTag operates as basically as a GATT server, to which a GATT client can write commands and read data. The Linux tool `gatttool` can be used as a tool for read and write operations.
 
 1. First find the Bluetooth device handle in the Linux system:
-  * ```
-    $ hcitool dev
+```
+   $ hcitool dev
 
-    Devices:
-	hci0: 00:02:72:CC:E3:82
-	hci1: 00:10:C6:29:FD:4B
-    ```
+   Devices:
+      hci0: 00:02:72:CC:E3:82
+      hci1: 00:10:C6:29:FD:4B
+```
+This computer contains two Bluetooth cards. In this case it is the hci0 handle that is the Bluetooth Low energy card.
+
+2. Press the button on the side of the SensorTag, and enter the command below for scanning: (root).
+```
+   $ hcitool -i hci0 lescan
+
+   LE Scan...
+   34:B1:F7:D5:05:FC (unknown)
+   34:B1:F7:D5:05:FC SensorTag
+```
+
+3. The address of the SensorTag is 34:B1:F7:D5:05:FC. Luckily there is only one protocol at the top of Bluetooth Low Energy, called the GATT protocol. The Linux tool `gatttool` implements the GATT protocol, and can be used for communicating with the SensorTag. The `gatttool` has to be executed with root privilege, and in the case below, it is used in interactive mode.
+```
+   $ gatttool -i hci0 -b 34:B1:F7:D5:05:FC --interactive
+   [34:B1:F7:D5:05:FC][LE]>
+```
+A prompt is returned - connect to the device:
+```
+   [34:B1:F7:D5:05:FC][LE]> connect
+   Attempting to connect to 34:B1:F7:D5:05:FC
+   Connection successful
+   [34:B1:F7:D5:05:FC][LE]>
+```
+
+Read out the temperature and humidity:
+
+```
+   [34:B1:F7:D5:05:FC][LE]> char-read-hnd 0x25
+   Characteristic value/descriptor 00 00 00 00
+   [34:B1:F7:D5:05:FC][LE]>
+```
+
+The 0x25 is a "handle" - or address in the SensorTag, the `gatttool` can read. But before the SensorTag can start measuring the temperature / humidity, a command has to be written to the handle 0x29 to setup the sensor measuring.
+
+```
+   [34:B1:F7:D5:05:FC][LE]> char-write-cmd 0x29 01
+   [34:B1:F7:D5:05:FC][LE]> char-read-hnd 0x25
+   Characteristic value/descriptor d7 fe 18 0c
+   [34:B1:F7:D5:05:FC][LE]>
+```
+
+The output from the temperature / humidity sensor is in a raw format, which has to be converted into Celsius and humidity by a mathematical formal (which can be found in the datasheet for the temperature sensor). 
+
+4. Disconnecting the device:
+```
+   [34:B1:F7:D5:05:FC][LE]> disconnect
+```
+
+5. Exit `gatttool`
+```
+   [34:B1:F7:D5:05:FC][LE]> exit
+```
+
+Various SensorTag Links
+-----------------------
+[The official BlueZ homepage](http://www.bluez.org "BlueZ Homepage")
+
+[The official SensorTag webpage from Texas instruments](http://www.ti.com/ww/en/wireless_connectivity/sensortag/index.shtml?INTC=SensorTag&HQS=sensortag "TI SensorTag")
