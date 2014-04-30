@@ -29,15 +29,33 @@ This command has to be executed with root privileges. To obtain root privilege, 
 or
   * sudo (then enter the root password)
 
-The command sudo has to be configured properly in the Linux system in order to be used. If any doubts use the command su root.
-
-6. Download the make project
+6. Download the make project: (root):
   * `apt-get install make`
-Execute this command with root privilege.
 
 7. Now it is time to configure and build the downloaded Bluez software. Change directory to the Bluez folder:
   * `cd bluez-5.18`
 
-8. 
+8. Write the following in the terminal:
+  * `./configure --disable-systemd`
+  * A lot of text will be outputted to the terminal. This process should only take a few seconds.
+
+9. Make (compile) the BlueZ software by writing (root):
+  * `make`
+  * The terminal outputs a lot of text describing the different compiling steps, when building the Bluez software. The build process may take a few minutes.
+
+10. 10.	Install the BlueZ software by writing the following (root):
+  * `make install`
+
+11. the `gatttool` has to be copied manually into the Linux applications: (Root)
+  * `cp attrib/gatttool /usr/local/bin/`
+
+12: Rename (or remove) the default Debian `gatttool` by writing the following command: (root)
+  * `mv /usr/bin/gatttool /usr/bin/gatttool-old`
+
+In one of the comments in the guideline from the blog, it is noticed that the kernel has to be equal or higher to version 3.5. But the version of the default kernel in Debian version 7.4.0 is 3.2, which seems to work just fine! So don’t begin to update the Linux kernel, unless you find it funny.
+
+Communicating with the SensorTag
+--------------------------------
+The SensorTag operates as basically as a GATT server, to which a GATT client can write commands and read data. The Linux tool `gatttool` can be used as a tool for read and write operations.
 
 
