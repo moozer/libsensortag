@@ -32,11 +32,10 @@ or
 The command sudo has to be configured properly in the Linux system in order to be used. If any doubts use the command su root.
 
 6. Download the make project
-  * apt-get install make
+  * `apt-get install make`
 Execute this command with root privilege.
 
-Now it is time to configure and build the downloaded Bluez software:
-7. Change directory to the Bluez folder.
+7. Now it is time to configure and build the downloaded Bluez software. Change directory to the Bluez folder:
   * `cd bluez-5.18`
 
 8. 
