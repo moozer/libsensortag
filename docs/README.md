@@ -119,7 +119,7 @@ The output from the temperature / humidity sensor is in a raw format, which has 
    [34:B1:F7:D5:05:FC][LE]> exit
 ```
 
-Various SensorTag Links
+SensorTag Links
 -----------------------
 The official BlueZ homepage: [link](http://www.bluez.org "BlueZ Homepage")
 
@@ -129,9 +129,9 @@ Michael Saunbys blog about Raspberry Pi, Python and SensorTag: [link](http://mik
 
 Joost Yervante Damad blog about SensorTag experiments [link](http://joost.damad.be/2013/08/experiments-with-bluetooth-low-energy.html "Blog about SensorTag experiments")
 
-Page about unboxing and how to get started with the SensorTag [link](http://www.cnx-software.com/2013/07/21/texas-instruments-sensortag-unboxing-getting-started-with-bluetooth-low-energy-in-linux-with-a-raspberry-pi/)
+Page about unboxing and how to get started with the SensorTag [link](http://www.cnx-software.com/2013/07/21/texas-instruments-sensortag-unboxing-getting-started-with-bluetooth-low-energy-in-linux-with-a-raspberry-pi/ "Unboxing the SensorTag")
 
-Article about the SensorTag hardware [link](http://makezine.com/2013/04/18/teardown-of-the-ti-sensortag/)
+Article about the SensorTag hardware [link](http://makezine.com/2013/04/18/teardown-of-the-ti-sensortag/ "Article about the SensorTag hardware")
 
-Pretty cool webpage about programming and controlling the different sensors in the SensorTag. The source coude examples are in techBASIS, but the code example should be understandable [link](http://www.byteworks.us/Byte_Works/SensorTag.html)
+Pretty cool webpage about programming and controlling the different sensors in the SensorTag. The examples are written in techBASIS, but the examples is understandable [link](http://www.byteworks.us/Byte_Works/SensorTag.html ")
 
