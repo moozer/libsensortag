@@ -43,7 +43,7 @@ or
   * `make`
   * The terminal outputs a lot of text describing the different compiling steps, when building the Bluez software. The build process may take a few minutes.
 
-10. 10.	Install the BlueZ software by writing the following (root):
+10. Install the BlueZ software by writing the following (root):
   * `make install`
 
 11. The `gatttool` has to be copied manually into the Linux applications: (Root)
