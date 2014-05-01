@@ -2,7 +2,7 @@
 # A test program for sensortag readings
 #
 
-import sensortag
+from .. import sensortag
 import time
 
 # Global constants for menu choices
