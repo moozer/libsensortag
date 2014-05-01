@@ -1,7 +1,7 @@
 How the sensortag communicate with the client
 =============================================
 
-![Sequens Diagram For Reading Temp Sensor Value](libsensortag/Documentation/Sequence diagram of sensorTag communication.jpg "Title")
+![Sequens Diagram For Reading Temp Sensor Value](Sequence diagram of sensorTag communication.jpg "Hello Kitty")
 
 
 
