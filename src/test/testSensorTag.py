@@ -1,8 +1,10 @@
 #
 # A test program for sensortag readings
 #
-
-from .. import sensortag
+import os
+parentdir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+os.sys.path.insert(0,parentdir) 
+import sensortag
 import time
 
 # Global constants for menu choices
