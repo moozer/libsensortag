@@ -13,11 +13,13 @@ About branches
 
 There are two main branches:
 
-* Release  
-Used for tagged releases only. This is the "stable" branch.
+* Release
+
+  Used for tagged releases only. This is the "stable" branch.
 
 * development
-Bleeding edge version, where we don't expect everything to work.
+
+  Bleeding edge version, where we don't expect everything to work.
 
 Other branches will be named *wip-XX* (for developping new features) and *issueNN-XX* (for fixing bugs).
 
