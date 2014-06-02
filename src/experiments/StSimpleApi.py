@@ -68,6 +68,61 @@ def getHum( ST ):
     print >> sys.stderr, "HUMD %.1f TEMP %.1f" % (rh, t)
     
     return (t, rh)
+
+def getAcc( ST ):
+
+    ST.char_write_cmd(0x31, 0x01)
+    v = ST.char_read_hnd( 0x2d )
+    
+    (xyz,mag) = calcAccel(v[0],v[1],v[2])
+    self.data['accl'] = xyz
+    return xyz
+
+def getTemp( ST ):
+
+    ST.char_write_cmd(0x29, 0x01)
+    v = ST.char_read_hnd( 0x25 )
+    
+    objT = (v[1]<<8)+v[0]
+    ambT = (v[3]<<8)+v[2]
+    targetT = calcTmpTarget(objT, ambT)
+    self.data['t006'] = targetT
+    return targetT
+
+def getMag( ST ):
+    
+    ST.char_write_cmd(0x44, 0x01)
+    v = ST.char_read_hnd( 0x40 )
+    x = (v[1]<<8)+v[0]
+    y = (v[3]<<8)+v[2]
+    z = (v[5]<<8)+v[4]
+    xyz = calcMagn(x, y, z)
+    self.data['magn'] = xyz
+    return xyz
+
+def getGyro( ST ):
+    
+    ST.char_write_cmd(0x5b, 0x07)
+    v = ST.char_read_hnd( 0x57 )
+    return v
+
+def getBaro( ST ):
+
+    ST.char_write_cmd(0x4f, 0x01)
+    v = ST.char_read_hnd( 0x4b )
+    rawT = (v[1]<<8)+v[0]
+    rawP = (v[3]<<8)+v[2]
+    (temp, pres) =  self.data['baro'] = barometer.calc(rawT, rawP)
+    return temp, pres
+    #print "BARO", temp, pres
+    self.data['time'] = long(time.time() * 1000);
+    # The socket or output file might not be writeable
+    # check with select so we don't block.
+    (re,wr,ex) = select.select([],[datalog],[],0)
+    if len(wr) > 0:
+        datalog.write(json.dumps(self.data) + "\n")
+        datalog.flush()
+        pass
     
 # and a test run main
 if __name__ == "__main__":
@@ -81,3 +136,8 @@ if __name__ == "__main__":
 
     ST = SensorTag( StMac )
     print getHum( ST )
+	print getAcc( ST )
+	print getBaro( ST )
+	print getMag( ST )
+	print getGyro( ST )
+	print getTemp( ST )
