@@ -109,16 +109,12 @@ The 0x3C is a "handle" - or address in the SensorTag, the `gatttool` can read. B
 
 The output from the temperature / humidity sensor is in a raw format, which has to be converted into Celsius and humidity by a mathematical formal (which can be found in the datasheet for the temperature sensor). 
 
-### Example calculation ###
+__Example calculation__
 _Temperature:_
-
 Temp = -45.86 + 176.72 / 65536 * 0x6985 = 25.58 grader
 
-
 _Humidity:_
-
 Read = 0x367B & ~0x0003; // Clear the last two bits
-
 Hum = -6.0 + 125.0 / 65536 * Read = 54.16% 
 
 * Disconnecting the device:
