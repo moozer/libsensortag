@@ -8,8 +8,8 @@
 import os, sys, pexpect
 parentdir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 os.sys.path.insert(0,parentdir) 
-import sensortag
 from sensor_calcs import *
+from sensor_calcs import Barometer
 
 # SensorTag class
 # from 
@@ -68,6 +68,59 @@ def getHum( ST ):
     print >> sys.stderr, "HUMD %.1f TEMP %.1f" % (rh, t)
     
     return (t, rh)
+
+def getAcc( ST ):
+
+    ST.char_write_cmd(0x31, 0x01)
+    v = ST.char_read_hnd( 0x2d )
+    
+    (xyz,mag) = calcAccel(v[0],v[1],v[2])
+    #data['accl'] = xyz
+    return xyz
+
+def getTemp( ST ):
+
+    ST.char_write_cmd(0x29, 0x01)
+    v = ST.char_read_hnd( 0x25 )
+    
+    objT = (v[1]<<8)+v[0]
+    ambT = (v[3]<<8)+v[2]
+    targetT = calcTmpTarget(objT, ambT)
+    #data['t006'] = targetT
+    return targetT
+
+def getMag( ST ):
+    
+    ST.char_write_cmd(0x44, 0x01)
+    v = ST.char_read_hnd( 0x40 )
+    x = (v[1]<<8)+v[0]
+    y = (v[3]<<8)+v[2]
+    z = (v[5]<<8)+v[4]
+    xyz = calcMagn(x, y, z)
+    #data['magn'] = xyz
+    return xyz
+
+def getGyro( ST ):
+    
+    ST.char_write_cmd(0x5b, 0x07)
+    v = ST.char_read_hnd( 0x57 )
+    return v
+
+def getBaro( ST ):
+    
+    
+    ST.char_write_cmd(0x4f,0x02)
+    rawcal = ST.char_read_hnd(0x52)
+    B = Barometer( rawcal )
+    
+    ST.char_write_cmd(0x4f, 0x01)
+    v = ST.char_read_hnd( 0x4b )
+    rawT = (v[1]<<8)+v[0]
+    rawP = (v[3]<<8)+v[2]
+    
+    #(temp, pres) =  self.data['baro'] = 
+    (temp, pres) = B.calc(rawT, rawP)
+    return temp, pres
     
 # and a test run main
 if __name__ == "__main__":
@@ -81,3 +134,8 @@ if __name__ == "__main__":
 
     ST = SensorTag( StMac )
     print getHum( ST )
+    print getAcc( ST )
+    print getBaro( ST )
+    print getMag( ST )
+    print getGyro( ST )
+    print getTemp( ST )
