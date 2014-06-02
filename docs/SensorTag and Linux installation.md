@@ -93,7 +93,7 @@ A prompt is returned - connect to the device:
 Read out the temperature and humidity:
 
 ```
-   [34:B1:F7:D5:05:FC][LE]> char-read-hnd 0x25
+   [34:B1:F7:D5:05:FC][LE]> char-read-hnd 0x38
    Characteristic value/descriptor 00 00 00 00
    [34:B1:F7:D5:05:FC][LE]>
 ```
@@ -101,13 +101,21 @@ Read out the temperature and humidity:
 The 0x25 is a "handle" - or address in the SensorTag, the `gatttool` can read. But before the SensorTag can start measuring the temperature / humidity, a command has to be written to the handle 0x29 to setup the sensor measuring.
 
 ```
-   [34:B1:F7:D5:05:FC][LE]> char-write-cmd 0x29 01
-   [34:B1:F7:D5:05:FC][LE]> char-read-hnd 0x25
-   Characteristic value/descriptor d7 fe 18 0c
+   [34:B1:F7:D5:05:FC][LE]> char-write-cmd 0x3C 01
+   [34:B1:F7:D5:05:FC][LE]> char-read-hnd 0x38
+   Characteristic value/descriptor 85 69 7B 36 
    [34:B1:F7:D5:05:FC][LE]>
 ```
 
 The output from the temperature / humidity sensor is in a raw format, which has to be converted into Celsius and humidity by a mathematical formal (which can be found in the datasheet for the temperature sensor). 
+
+Example calculation:
+_Temperature:_
+Temp = -45.86 + 176.72 / 65536 * 0x6985 = 25.58 grader
+
+_Humidity:_
+Read = 0x367B & ~0x0003; // Clear the last two bits
+Hum = -6.0 + 125.0 / 65536 * Read = 54.16% 
 
 * Disconnecting the device:
 ```
